@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Nostr Wiki (NIP-54) Viewer</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>Nostr Wiki (NIP-54)</h1>
+    <p class="sub">Fetch wikipedia-style articles from a Nostr relay (kind 30818).</p>
+  </header>
+
+  <main class="container grid">
+    <section class="card">
+      <h2>relay & query</h2>
+      <form id="query-form">
+        <label for="relay">relay url</label>
+        <input id="relay" name="relay" type="url" required
+               value="wss://relay.damus.io" />
+
+        <label for="topic">topic (optional, uses <code>d</code> tag)</label>
+        <input id="topic" name="topic" type="text" placeholder="e.g. wiki, bitcoin, thin-shell-structure" />
+
+        <div class="row">
+          <label for="limit">max articles</label>
+          <input id="limit" name="limit" type="number" min="1" max="100" value="10" />
+          <button id="btn-latest" type="button">fetch latest</button>
+          <button id="btn-topic"  type="button">load by topic</button>
+        </div>
+      </form>
+      <details class="hint">
+        <summary>what’s this?</summary>
+        <p>
+          NIP-54 defines wiki articles as events of kind <code>30818</code> identified by a normalized
+          <code>d</code> tag; content is AsciiDoc-ish with <code>[[wikilinks]]</code>. This client asks a relay
+          for recent articles or for a specific topic via <code>#d</code> filter.  [oai_citation:1‡NIPs](https://nips.nostr.com/54)
+        </p>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>articles</h2>
+      <ul id="articles" class="list"></ul>
+    </section>
+
+    <section class="card">
+      <h2 id="viewer-title">viewer</h2>
+      <article id="viewer" class="viewer">
+        <p class="muted">choose an article to read.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container foot">
+    <small>
+      spec: <a href="https://nips.nostr.com/54" target="_blank" rel="noopener">NIP-54 Wiki</a>
+    </small>
+  </footer>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
